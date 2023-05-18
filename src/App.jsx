@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import './App.scss';
+import cn from 'classnames';
 
 import usersFromServer from './api/users';
 import categoriesFromServer from './api/categories';
@@ -22,6 +23,10 @@ export const App = () => {
   const [selectedUser, setSelectedUser] = useState('');
   const [query, setQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [isSortedById, setIsSortedById] = useState(0);
+  const [isSortedByProduct, setIsSortedByProduct] = useState(0);
+  const [isSortedByCategory, setIsSortedByCategory] = useState(0);
+  const [isSortedByUser, setIsSortedByUser] = useState(0);
 
   const handleAddCategory = (product) => {
     if (selectedCategory.includes(product)) {
@@ -63,10 +68,76 @@ export const App = () => {
     return newProduct;
   }, [selectedUser, selectedCategory, query]);
 
+  const handleToggleSort = (type) => {
+    setIsSortedById(0);
+    setIsSortedByProduct(0);
+    setIsSortedByCategory(0);
+    setIsSortedByUser(0);
+
+    switch (type) {
+      case 'id':
+        if (isSortedById === 1) {
+          filteredProduct.sort((a, b) => b.id - a.id);
+          setIsSortedById(isSortedById + 1);
+        } else if (isSortedById === 0) {
+          filteredProduct.sort((a, b) => a.id - b.id);
+          setIsSortedById(isSortedById + 1);
+        } else {
+          handleToggleSort();
+        }
+
+        break;
+      case 'product':
+
+        if (isSortedByProduct === 1) {
+          filteredProduct.sort((a, b) => b.name.localeCompare(a.name));
+          setIsSortedByProduct(isSortedByProduct + 1);
+        } else if (isSortedByProduct === 0) {
+          filteredProduct.sort((a, b) => a.name.localeCompare(b.name));
+          setIsSortedByProduct(isSortedByProduct + 1);
+        } else {
+          handleToggleSort();
+        }
+
+        break;
+      case 'category':
+        if (isSortedByCategory === 1) {
+          filteredProduct.sort((a, b) => b.name.localeCompare(a.name));
+          setIsSortedByCategory(isSortedByCategory + 1);
+        } else if (isSortedByCategory === 0) {
+          filteredProduct.sort((a, b) => a.name.localeCompare(b.name));
+          setIsSortedByCategory(isSortedByCategory + 1);
+        } else {
+          handleToggleSort();
+        }
+
+        break;
+      case 'user':
+        if (isSortedByUser === 0) {
+          filteredProduct.sort((a, b) => a.name.localeCompare(b.name));
+          setIsSortedByUser(isSortedByUser + 1);
+        } else if (isSortedByUser === 1) {
+          filteredProduct.sort((a, b) => b.name.localeCompare(a.name));
+          setIsSortedByUser(isSortedByUser + 1);
+        } else {
+          handleToggleSort();
+        }
+
+        break;
+
+      default:
+        filteredProduct.sort((a, b) => a.id - b.id);
+        setIsSortedById(0);
+    }
+  };
+
   const handleReset = () => {
     setQuery('');
     setSelectedCategory([]);
     setSelectedUser('');
+    if (!isSortedById) {
+      handleToggleSort();
+    }
   };
 
   return (
@@ -180,9 +251,20 @@ export const App = () => {
                     <span className="is-flex is-flex-wrap-nowrap">
                       ID
 
-                      <a href="#/">
+                      <a
+                        href="#/"
+                        onClick={() => handleToggleSort('id')}
+                      >
                         <span className="icon">
-                          <i data-cy="SortIcon" className="fas fa-sort" />
+                          <i
+                            data-cy="SortIcon"
+                            className={cn({
+                              'fas fa-sort-up': isSortedById === 1,
+                              'fas fa-sort-down': isSortedById === 2,
+                              'fas fa-sort': isSortedById === 0,
+                            })}
+
+                          />
                         </span>
                       </a>
                     </span>
@@ -192,9 +274,19 @@ export const App = () => {
                     <span className="is-flex is-flex-wrap-nowrap">
                       Product
 
-                      <a href="#/">
+                      <a
+                        href="#/"
+                        onClick={() => handleToggleSort('product')}
+                      >
                         <span className="icon">
-                          <i data-cy="SortIcon" className="fas fa-sort-down" />
+                          <i
+                            data-cy="SortIcon"
+                            className={cn({
+                              'fas fa-sort-up': isSortedByProduct === 1,
+                              'fas fa-sort-down': isSortedByProduct === 2,
+                              'fas fa-sort': isSortedByProduct === 0,
+                            })}
+                          />
                         </span>
                       </a>
                     </span>
@@ -204,9 +296,16 @@ export const App = () => {
                     <span className="is-flex is-flex-wrap-nowrap">
                       Category
 
-                      <a href="#/">
+                      <a href="#/" onClick={() => handleToggleSort('category')}>
                         <span className="icon">
-                          <i data-cy="SortIcon" className="fas fa-sort-up" />
+                          <i
+                            data-cy="SortIcon"
+                            className={cn({
+                              'fas fa-sort-up': isSortedByCategory === 1,
+                              'fas fa-sort-down': isSortedByCategory === 2,
+                              'fas fa-sort': isSortedByCategory === 0,
+                            })}
+                          />
                         </span>
                       </a>
                     </span>
@@ -216,9 +315,18 @@ export const App = () => {
                     <span className="is-flex is-flex-wrap-nowrap">
                       User
 
-                      <a href="#/">
-                        <span className="icon">
-                          <i data-cy="SortIcon" className="fas fa-sort" />
+                      <a href="#/" onClick={() => handleToggleSort('user')}>
+                        <span
+                          className="icon"
+                        >
+                          <i
+                            data-cy="SortIcon"
+                            className={cn({
+                              'fas fa-sort-up': isSortedByUser === 1,
+                              'fas fa-sort-down': isSortedByUser === 2,
+                              'fas fa-sort': isSortedByUser === 0,
+                            })}
+                          />
                         </span>
                       </a>
                     </span>
