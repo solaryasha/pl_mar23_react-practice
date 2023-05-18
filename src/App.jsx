@@ -150,15 +150,15 @@ export const App = () => {
                 All
               </a>
 
-              {products.map(product => (
+              {categoriesFromServer.map(product => (
                 <a
                   data-cy="Category"
                   className="button mr-2 my-1 is-info"
-                  href={`#/${product.name}`}
-                  onClick={() => setSelectedCategory(product.category.title)}
+                  href={`#/${product.title}`}
+                  onClick={() => setSelectedCategory(product.title)}
                 >
                   {' '}
-                  {product.category.title}
+                  {product.title}
                 </a>
               ))}
 
