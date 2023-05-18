@@ -20,7 +20,7 @@ const products = productsFromServer.map((product) => {
 export const App = () => {
   const [query, setQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState([]);
   let visibleProducts = products;
 
   if (query) {
@@ -45,10 +45,10 @@ export const App = () => {
     );
   }
 
-  if (selectedCategory) {
+  if (selectedCategory.length) {
     visibleProducts = visibleProducts.filter(
       (product) => {
-        const hasCategory = product.category.title === selectedCategory.title;
+        const hasCategory = selectedCategory.includes(product.category.title);
 
         return hasCategory;
       },
@@ -128,10 +128,10 @@ export const App = () => {
               <a
                 href="#/"
                 data-cy="AllCategories"
-                className={selectedCategory
+                className={selectedCategory.length
                   ? 'button is-success mr-6 is-outlined'
                   : 'button is-success mr-6'}
-                onClick={() => setSelectedCategory('')}
+                onClick={() => setSelectedCategory([])}
               >
                 All
               </a>
@@ -142,11 +142,24 @@ export const App = () => {
                 return (
                   <a
                     data-cy="Category"
-                    className={category.title === selectedCategory.title
+                    className={selectedCategory.includes(category.title)
                       ? 'button mr-2 my-1 is-info'
                       : 'button mr-2 my-1'}
                     href="#/"
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => {
+                      let newSelectedCategory;
+
+                      if (selectedCategory.includes(category.title)) {
+                        newSelectedCategory = selectedCategory.filter(
+                          categoryTitle => categoryTitle !== category.title,
+                        );
+                      } else {
+                        newSelectedCategory = [...selectedCategory];
+                        newSelectedCategory.push(category.title);
+                      }
+
+                      return setSelectedCategory(newSelectedCategory);
+                    }}
                   >
                     {title}
                   </a>
@@ -162,7 +175,7 @@ export const App = () => {
                 onClick={() => {
                   setQuery('');
                   setSelectedUser('');
-                  setSelectedCategory('');
+                  setSelectedCategory([]);
                 }}
               >
                 Reset all filters
