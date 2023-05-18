@@ -32,6 +32,10 @@ export const App = () => {
   const [visibleProducts, setVisibleProducts] = useState(allProducts);
   const [userFilters, setUserFilters] = useState([]);
   const [categoryFilters, setCategoryFilters] = useState([]);
+  // const [sorting, setSorting] = useState({
+  //   by: '',
+  //   direction: '',
+  // });
 
   useEffect(() => {
     let filtered = allProducts;
@@ -54,6 +58,17 @@ export const App = () => {
 
     setVisibleProducts(filtered);
   }, [userFilters, categoryFilters, query]);
+
+  // const sort = (byWhat) => {
+  //   if(byWhat==='ID'){
+  //     setVisibleProducts(old=>old.sort((productA,productB)
+  //       => productA[byWhat]-(productB[byWhat])));
+
+  //   } else {
+  //   setVisibleProducts(old=>old.sort((productA,productB)
+  //     => productA[byWhat].localeCompare(productB[byWhat])));
+  //   }
+  // };
 
   const filterByUser = (userName) => {
     if (userFilters.includes(userName)) {
@@ -113,28 +128,6 @@ export const App = () => {
                   {user.name}
                 </a>
               ))}
-
-              {/* <a
-                data-cy="FilterUser"
-                href="#/"
-              >
-                User 1
-              </a>
-
-              <a
-                data-cy="FilterUser"
-                href="#/"
-                className="is-active"
-              >
-                User 2
-              </a>
-
-              <a
-                data-cy="FilterUser"
-                href="#/"
-              >
-                User 3
-              </a> */}
             </p>
 
             <div className="panel-block">
@@ -189,37 +182,6 @@ export const App = () => {
                   {category.title}
                 </a>
               ))}
-
-              {/*
-               <a
-                data-cy="Category"
-                className="button mr-2 my-1 is-info"
-                href="#/"
-              >
-                Category 1
-              </a>
-                <a
-                data-cy="Category"
-                className="button mr-2 my-1"
-                href="#/"
-              >
-                Category 2
-              </a>
-
-              <a
-                data-cy="Category"
-                className="button mr-2 my-1 is-info"
-                href="#/"
-              >
-                Category 3
-              </a>
-              <a
-                data-cy="Category"
-                className="button mr-2 my-1"
-                href="#/"
-              >
-                Category 4
-              </a> */}
             </div>
 
             <div className="panel-block">
@@ -250,7 +212,11 @@ export const App = () => {
 
                         <a href="#/">
                           <span className="icon">
-                            <i data-cy="SortIcon" className="fas fa-sort" />
+                            <i
+                              data-cy="SortIcon"
+                              className="fas fa-sort"
+                             // onClick={()=>sort('id')}
+                            />
                           </span>
                         </a>
                       </span>
@@ -321,54 +287,6 @@ export const App = () => {
                       </td>
                     </tr>
                   ))}
-
-                  {/* <tr data-cy="Product">
-                    <td className="has-text-weight-bold" data-cy="ProductId">
-                      1
-                    </td>
-
-                    <td data-cy="ProductName">Milk</td>
-                    <td data-cy="ProductCategory">🍺 - Drinks</td>
-
-                    <td
-                      data-cy="ProductUser"
-                      className="has-text-link"
-                    >
-                      Max
-                    </td>
-                  </tr>
-
-                  <tr data-cy="Product">
-                    <td className="has-text-weight-bold" data-cy="ProductId">
-                      2
-                    </td>
-
-                    <td data-cy="ProductName">Bread</td>
-                    <td data-cy="ProductCategory">🍞 - Grocery</td>
-
-                    <td
-                      data-cy="ProductUser"
-                      className="has-text-danger"
-                    >
-                      Anna
-                    </td>
-                  </tr>
-
-                  <tr data-cy="Product">
-                    <td className="has-text-weight-bold" data-cy="ProductId">
-                      3
-                    </td>
-
-                    <td data-cy="ProductName">iPhone</td>
-                    <td data-cy="ProductCategory">💻 - Electronics</td>
-
-                    <td
-                      data-cy="ProductUser"
-                      className="has-text-link"
-                    >
-                      Roma
-                    </td>
-                  </tr> */}
                 </tbody>
               </table>
             )
