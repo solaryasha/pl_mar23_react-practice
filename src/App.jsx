@@ -23,10 +23,10 @@ export const App = () => {
   const [selectedUser, setSelectedUser] = useState('');
   const [query, setQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState([]);
-  const [isSortedById, setIsSortedById] = useState(0);
-  const [isSortedByProduct, setIsSortedByProduct] = useState(0);
-  const [isSortedByCategory, setIsSortedByCategory] = useState(0);
-  const [isSortedByUser, setIsSortedByUser] = useState(0);
+  const [clickedSortedById, setIsSortedById] = useState(0);
+  const [clickedSortedByProduct, setIsSortedByProduct] = useState(0);
+  const [clickedSortedByCategory, setIsSortedByCategory] = useState(0);
+  const [clickedSortedByUser, setIsSortedByUser] = useState(0);
 
   const handleAddCategory = (product) => {
     if (selectedCategory.includes(product)) {
@@ -76,12 +76,12 @@ export const App = () => {
 
     switch (type) {
       case 'id':
-        if (isSortedById === 1) {
+        if (clickedSortedById === 1) {
           filteredProduct.sort((a, b) => b.id - a.id);
-          setIsSortedById(isSortedById + 1);
-        } else if (isSortedById === 0) {
+          setIsSortedById(clickedSortedById + 1);
+        } else if (clickedSortedById === 0) {
           filteredProduct.sort((a, b) => a.id - b.id);
-          setIsSortedById(isSortedById + 1);
+          setIsSortedById(clickedSortedById + 1);
         } else {
           handleToggleSort();
         }
@@ -89,36 +89,36 @@ export const App = () => {
         break;
       case 'product':
 
-        if (isSortedByProduct === 1) {
+        if (clickedSortedByProduct === 1) {
           filteredProduct.sort((a, b) => b.name.localeCompare(a.name));
-          setIsSortedByProduct(isSortedByProduct + 1);
-        } else if (isSortedByProduct === 0) {
+          setIsSortedByProduct(clickedSortedByProduct + 1);
+        } else if (clickedSortedByProduct === 0) {
           filteredProduct.sort((a, b) => a.name.localeCompare(b.name));
-          setIsSortedByProduct(isSortedByProduct + 1);
+          setIsSortedByProduct(clickedSortedByProduct + 1);
         } else {
           handleToggleSort();
         }
 
         break;
       case 'category':
-        if (isSortedByCategory === 1) {
+        if (clickedSortedByCategory === 1) {
           filteredProduct.sort((a, b) => b.name.localeCompare(a.name));
-          setIsSortedByCategory(isSortedByCategory + 1);
-        } else if (isSortedByCategory === 0) {
+          setIsSortedByCategory(clickedSortedByCategory + 1);
+        } else if (clickedSortedByCategory === 0) {
           filteredProduct.sort((a, b) => a.name.localeCompare(b.name));
-          setIsSortedByCategory(isSortedByCategory + 1);
+          setIsSortedByCategory(clickedSortedByCategory + 1);
         } else {
           handleToggleSort();
         }
 
         break;
       case 'user':
-        if (isSortedByUser === 0) {
+        if (clickedSortedByUser === 0) {
           filteredProduct.sort((a, b) => a.name.localeCompare(b.name));
-          setIsSortedByUser(isSortedByUser + 1);
-        } else if (isSortedByUser === 1) {
+          setIsSortedByUser(clickedSortedByUser + 1);
+        } else if (clickedSortedByUser === 1) {
           filteredProduct.sort((a, b) => b.name.localeCompare(a.name));
-          setIsSortedByUser(isSortedByUser + 1);
+          setIsSortedByUser(clickedSortedByUser + 1);
         } else {
           handleToggleSort();
         }
@@ -127,7 +127,6 @@ export const App = () => {
 
       default:
         filteredProduct.sort((a, b) => a.id - b.id);
-        setIsSortedById(0);
     }
   };
 
@@ -135,7 +134,7 @@ export const App = () => {
     setQuery('');
     setSelectedCategory([]);
     setSelectedUser('');
-    if (!isSortedById) {
+    if (!clickedSortedById) {
       handleToggleSort();
     }
   };
@@ -259,9 +258,9 @@ export const App = () => {
                           <i
                             data-cy="SortIcon"
                             className={cn({
-                              'fas fa-sort-up': isSortedById === 1,
-                              'fas fa-sort-down': isSortedById === 2,
-                              'fas fa-sort': isSortedById === 0,
+                              'fas fa-sort-up': clickedSortedById === 1,
+                              'fas fa-sort-down': clickedSortedById === 2,
+                              'fas fa-sort': clickedSortedById === 0,
                             })}
 
                           />
@@ -282,9 +281,9 @@ export const App = () => {
                           <i
                             data-cy="SortIcon"
                             className={cn({
-                              'fas fa-sort-up': isSortedByProduct === 1,
-                              'fas fa-sort-down': isSortedByProduct === 2,
-                              'fas fa-sort': isSortedByProduct === 0,
+                              'fas fa-sort-up': clickedSortedByProduct === 1,
+                              'fas fa-sort-down': clickedSortedByProduct === 2,
+                              'fas fa-sort': clickedSortedByProduct === 0,
                             })}
                           />
                         </span>
@@ -301,9 +300,9 @@ export const App = () => {
                           <i
                             data-cy="SortIcon"
                             className={cn({
-                              'fas fa-sort-up': isSortedByCategory === 1,
-                              'fas fa-sort-down': isSortedByCategory === 2,
-                              'fas fa-sort': isSortedByCategory === 0,
+                              'fas fa-sort-up': clickedSortedByCategory === 1,
+                              'fas fa-sort-down': clickedSortedByCategory === 2,
+                              'fas fa-sort': clickedSortedByCategory === 0,
                             })}
                           />
                         </span>
@@ -322,9 +321,9 @@ export const App = () => {
                           <i
                             data-cy="SortIcon"
                             className={cn({
-                              'fas fa-sort-up': isSortedByUser === 1,
-                              'fas fa-sort-down': isSortedByUser === 2,
-                              'fas fa-sort': isSortedByUser === 0,
+                              'fas fa-sort-up': clickedSortedByUser === 1,
+                              'fas fa-sort-down': clickedSortedByUser === 2,
+                              'fas fa-sort': clickedSortedByUser === 0,
                             })}
                           />
                         </span>
