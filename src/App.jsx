@@ -32,15 +32,13 @@ export const App = () => {
       .join(' ');
 
     if (trimmedQuery) {
-      newProduct = newProduct.filter(
-        (product) => {
-          const lowerQuery = trimmedQuery.toLowerCase();
+      newProduct = newProduct.filter((product) => {
+        const lowerQuery = trimmedQuery.toLowerCase();
 
-          const names = product.name.toLowerCase();
+        const names = product.name.toLowerCase();
 
-          return names.includes(lowerQuery);
-        },
-      );
+        return names.includes(lowerQuery);
+      });
     }
 
     if (selectedUser) {
@@ -54,7 +52,7 @@ export const App = () => {
     }
 
     return newProduct;
-  }, [selectedUser, selectedCategory]);
+  }, [selectedUser, selectedCategory, query]);
 
   const handleReset = () => {
     setQuery('');
