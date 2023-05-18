@@ -44,7 +44,7 @@ export const App = () => {
   useEffect(() => {
     const filteredElements = products.filter(product => (
       (userSelected === '' || product.user.name === userSelected)
-      && product.name.toLowerCase().includes(searchValue.toLowerCase())
+      && product.name?.toLowerCase().includes(searchValue?.toLowerCase())
     ));
 
     setElements(filteredElements);
