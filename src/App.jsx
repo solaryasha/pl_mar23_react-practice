@@ -33,27 +33,14 @@ export const App = () => (
               All
             </a>
 
-            <a
-              data-cy="FilterUser"
-              href="#/"
-            >
-              User 1
-            </a>
-
-            <a
-              data-cy="FilterUser"
-              href="#/"
-              className="is-active"
-            >
-              User 2
-            </a>
-
-            <a
-              data-cy="FilterUser"
-              href="#/"
-            >
-              User 3
-            </a>
+            {usersFromServer.map(user => (
+              <a
+                data-cy="FilterUser"
+                href="#/"
+              >
+                {user.name}
+              </a>
+            ))}
           </p>
 
           <div className="panel-block">
@@ -90,36 +77,15 @@ export const App = () => (
               All
             </a>
 
-            <a
-              data-cy="Category"
-              className="button mr-2 my-1 is-info"
-              href="#/"
-            >
-              Category 1
-            </a>
-
-            <a
-              data-cy="Category"
-              className="button mr-2 my-1"
-              href="#/"
-            >
-              Category 2
-            </a>
-
-            <a
-              data-cy="Category"
-              className="button mr-2 my-1 is-info"
-              href="#/"
-            >
-              Category 3
-            </a>
-            <a
-              data-cy="Category"
-              className="button mr-2 my-1"
-              href="#/"
-            >
-              Category 4
-            </a>
+            {categoriesFromServer.map(cat => (
+              <a
+                data-cy="Category"
+                className="button mr-2 my-1 is-info"
+                href="#/"
+              >
+                {cat.title}
+              </a>
+            ))}
           </div>
 
           <div className="panel-block">
