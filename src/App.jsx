@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.scss';
+import cn from 'classnames';
 
 import usersFromServer from './api/users';
 import categoriesFromServer from './api/categories';
@@ -195,29 +196,36 @@ export const App = () => (
           </thead>
 
           <tbody>
-            {products.map(product => (
-              <tr data-cy="Product">
-                <td className="has-text-weight-bold" data-cy="ProductId">
-                  {product.id}
-                </td>
+            {products.map((product) => {
+              const ownerSexClass = cn({
+                'has-text-link': product.user.sex === 'm',
+                'has-text-danger': product.user.sex === 'f',
+              });
 
-                <td data-cy="ProductName">{product.name}</td>
-                <td data-cy="ProductCategory">
-                  {product.category.icon}
-                  {' '}
-                  -
-                  {' '}
-                  {product.category.title}
-                </td>
+              return (
+                <tr data-cy="Product">
+                  <td className="has-text-weight-bold" data-cy="ProductId">
+                    {product.id}
+                  </td>
 
-                <td
-                  data-cy="ProductUser"
-                  className="has-text-link"
-                >
-                  {product.user.name}
-                </td>
-              </tr>
-            ))}
+                  <td data-cy="ProductName">{product.name}</td>
+                  <td data-cy="ProductCategory">
+                    {product.category.icon}
+                    {' '}
+                    -
+                    {' '}
+                    {product.category.title}
+                  </td>
+
+                  <td
+                    data-cy="ProductUser"
+                    className={ownerSexClass}
+                  >
+                    {product.user.name}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
