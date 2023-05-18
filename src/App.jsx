@@ -79,14 +79,14 @@ export const App = () => {
               >
                 All
               </a>
-              {products
+              {usersFromServer
                 .map(user => (
                   <a
                     data-cy="FilterUser"
-                    href={`#/${user.user.name}`}
-                    onClick={() => setSelectedUser(user.user.name)}
+                    href={`#/${user.name}`}
+                    onClick={() => setSelectedUser(user.name)}
                   >
-                    {user.user.name}
+                    {user.name}
                   </a>
                 ))}
               {/* <a
